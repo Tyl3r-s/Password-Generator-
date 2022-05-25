@@ -3,15 +3,13 @@
 // password character variables
 var characterLength = [];
 var choiceArray = [];
-
 var specialCharacterArray = ['!','@','#','$','%','^','&','*','(',')','_','<','>','|'];
 var lowerCaseArray = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 var upperCaseArray = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 var numberArray = ['1','2','3','4','5','6','7','8','9','0'];
 
 // prompts function 
-
-function promptValues() {
+var promptValues = function() {
   choiceArray = [];
   characterLength = parseInt(prompt("How many characters should be included in your password? Please choose any amount betwen 8 and 128."));
   if(isNaN(characterLength) || characterLength < 8 || characterLength > 128) {
@@ -30,12 +28,19 @@ function promptValues() {
   if (confirm("Do you wish to include numbers?")) {
     choiceArray = choiceArray.concat(numberArray);
   }
-  return true;
   
+  if (choiceArray.length === 0) {
+    window.alert("Please choose at least one character type to continue.");
+    promptValues();
+  }
+
+  return true;
 }
 
+
+
 // password based on prompts
-function generatePassword() {
+var generatePassword = function() {
     var password = "";
     for(var i = 0; i < characterLength; i++) {
       var randomIndex = Math.floor(Math.random() * choiceArray.length);
@@ -48,7 +53,7 @@ function generatePassword() {
 var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
-function writePassword() {
+var writePassword = function() {
   var correctPrompts = promptValues();
   var passwordText = document.querySelector("#password");
 
@@ -63,4 +68,3 @@ function writePassword() {
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
-
